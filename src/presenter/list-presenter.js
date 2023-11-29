@@ -26,8 +26,6 @@ export default class ListPresenter {
     tripEventsContainer);
 
     render(this.pointsContainerView, tripEventsContainer);
-    for (let i = 0; i < 3; i++) {
-      render(new TripEventsItemView(), this.pointsContainerView.getElement());
 
     for (let i = 0; i < this.pointsModel.points.length; i++) {
 
@@ -39,3 +37,5 @@ export default class ListPresenter {
       this.pointsContainerView.getElement());
     }
   }
+}
+
