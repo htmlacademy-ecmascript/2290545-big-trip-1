@@ -7,22 +7,27 @@ import PointView from '../view/point/point-viewt.js';
 
 
 export default class ListPresenter {
-  pointsContainerView = new PointsContainerView();
+
+  #pointsModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
+
+  #pointsContainerView = new PointsContainerView();
 
   constructor ({pointsModel, destinationsModel, offersModel}) {
-    this.pointsModel = pointsModel;
-    this.destinationsModel = destinationsModel;
-    this.offersModel = offersModel;
+    this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
   }
 
   init() {
     render(new FilterView(), filtersContainer);
     render(new SortView(), tripEventsContainer);
     render(new EditingFormView(
-      this.pointsModel.points[4],
-      this.destinationsModel.getById(this.pointsModel.points[4].destination),
-      this.offersModel.getByType(this.pointsModel.points[4].type),
-      this.destinationsModel.destinations),
+      this.#pointsModel.points[4],
+      this.#destinationsModel.getById(this.pointsModel.points[4].destination),
+      this.#offersModel.getByType(this.pointsModel.points[4].type),
+      this.#destinationsModel.destinations),
     tripEventsContainer);
 
     render(this.pointsContainerView, tripEventsContainer);
@@ -30,11 +35,11 @@ export default class ListPresenter {
     for (let i = 0; i < this.pointsModel.points.length; i++) {
 
       render(new PointView(
-        this.pointsModel.points[i],
-        this.destinationsModel.getById(this.pointsModel.points[i].destination),
-        this.offersModel.getByType(this.pointsModel.points[i].type),
+        this.#pointsModel.points[i],
+        this.#destinationsModel.getById(this.pointsModel.points[i].destination),
+        this.#offersModel.getByType(this.pointsModel.points[i].type),
       ),
-      this.pointsContainerView.getElement());
+      this.#pointsContainerView.getElement());
     }
   }
 }
