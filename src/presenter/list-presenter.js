@@ -26,8 +26,8 @@ export default class ListPresenter {
     render(new SortView(), tripEventsContainer);
     render(new EditingFormView(
       points,
-      this.#destinationsModel.getById(points.destination),
-      this.#offersModel.getByType(points.type),
+      this.#destinationsModel.getById(points[4].destination),
+      this.#offersModel.getByType(points[4].type),
       this.#destinationsModel.get()),
     tripEventsContainer);
 
@@ -36,9 +36,9 @@ export default class ListPresenter {
     for (let i = 0; i < points.length; i++) {
 
       render(new PointView(
-        this.#pointsModel.points[i],
-        this.#destinationsModel.getById(points.destination),
-        this.#offersModel.getByType(points.type),
+        points[i],
+        this.#destinationsModel.getById(points[i].destination),
+        this.#offersModel.getByType(points[i].type),
       ),
       this.#pointsContainerView.getElement());
     }
