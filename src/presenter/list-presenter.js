@@ -11,7 +11,7 @@ export default class ListPresenter {
   #pointsModel = null;
   #destinationsModel = null;
   #offersModel = null;
-  const points = this.#pointsModel.get();
+
   #pointsContainerView = new PointsContainerView();
 
   constructor ({pointsModel, destinationsModel, offersModel}) {
@@ -21,23 +21,24 @@ export default class ListPresenter {
   }
 
   init() {
+    const points = this.#pointsModel.get();
     render(new FilterView(), filtersContainer);
     render(new SortView(), tripEventsContainer);
     render(new EditingFormView(
       points,
-      this.#destinationsModel.getById(points),
-      this.#offersModel.getByType(this.pointsModel.points[4].type),
-      this.#destinationsModel.get(),
+      this.#destinationsModel.getById(points.destination),
+      this.#offersModel.getByType(points.type),
+      this.#destinationsModel.get()),
     tripEventsContainer);
 
     render(this.#pointsContainerView, tripEventsContainer);
 
-    for (let i = 0; i < this.pointsModel.points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
 
       render(new PointView(
         this.#pointsModel.points[i],
-        this.#destinationsModel.getById(this.pointsModel.points[i].destination),
-        this.#offersModel.getByType(this.pointsModel.points[i].type),
+        this.#destinationsModel.getById(points.destination),
+        this.#offersModel.getByType(points.type),
       ),
       this.#pointsContainerView.getElement());
     }
