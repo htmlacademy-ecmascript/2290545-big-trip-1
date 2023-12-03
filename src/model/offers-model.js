@@ -1,4 +1,5 @@
 export default class OffersModel {
+  #offers = null;
   constructor(offers) {
     this.#offers = offers;
   }

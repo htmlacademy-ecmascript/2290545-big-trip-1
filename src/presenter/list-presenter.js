@@ -11,7 +11,7 @@ export default class ListPresenter {
   #pointsModel = null;
   #destinationsModel = null;
   #offersModel = null;
-
+  const points = this.#pointsModel.get();
   #pointsContainerView = new PointsContainerView();
 
   constructor ({pointsModel, destinationsModel, offersModel}) {
@@ -24,13 +24,13 @@ export default class ListPresenter {
     render(new FilterView(), filtersContainer);
     render(new SortView(), tripEventsContainer);
     render(new EditingFormView(
-      this.#pointsModel.points[4],
-      this.#destinationsModel.getById(this.pointsModel.points[4].destination),
+      points,
+      this.#destinationsModel.getById(points),
       this.#offersModel.getByType(this.pointsModel.points[4].type),
-      this.#destinationsModel.destinations),
+      this.#destinationsModel.get(),
     tripEventsContainer);
 
-    render(this.pointsContainerView, tripEventsContainer);
+    render(this.#pointsContainerView, tripEventsContainer);
 
     for (let i = 0; i < this.pointsModel.points.length; i++) {
 
