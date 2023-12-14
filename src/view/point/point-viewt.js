@@ -1,26 +1,31 @@
-import {createElement} from '../../render.js';
+import AbstractView from '../../framework/view/abstract-view';
 import { createPointTemplite } from './point-template.js';
 
-export default class PointView {
-  constructor(point, pointDestination, pointOffers) {
-    this.point = point;
-    this.pointDestination = pointDestination;
-    this.pointOffers = pointOffers;
+export default class PointView extends AbstractView {
+  #point = null;
+  #pointDestination = null;
+  #pointOffers = null;
+  #pointEditClick = null;
+
+  constructor({point, pointDestination, pointOffers, onEditClick}) {
+    super();
+    this.#point = point;
+    this.#pointDestination = pointDestination;
+    this.#pointOffers = pointOffers;
+    this.#pointEditClick = onEditClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#pointEditClickHandler);
   }
 
-  getTemplate() {
-    return createPointTemplite(this.point, this.pointDestination, this.pointOffers);
+  get template() {
+    return createPointTemplite({
+      point: this.#point,
+      pointDestination: this.#pointDestination,
+      pointOffers: this.#pointOffers
+    });
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
+  #pointEditClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#pointEditClick();
+  };
 }
