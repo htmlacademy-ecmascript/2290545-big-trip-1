@@ -24,12 +24,13 @@ export default class ListPresenter {
     render(new SortView(), tripEventsContainer);
     render(this.pointsContainerView, tripEventsContainer);
 
-    for (let i = 0; i < this.#pointsModel.points.length; i++) {
-      this.#renderPoint(this.#pointsModel.points[i]);
+    const points = this.#pointsModel.get();
+    for (let i = 0; i < points.length; i++) {
+      this.#renderPoint(points[i]);
     }
   }
 
-  #renderPoint(point) {
+  #renderPoint = (point) => {
 
     const pointComponent = new PointView({
       point,
@@ -41,7 +42,8 @@ export default class ListPresenter {
       point,
       pointDestination: this.#destinationsModel.getById(point.destination),
       pointOffers: this.#offersModel.getByType(point.type),
-      arrayDestinationsModel: this.#destinationsModel.destinations,
+      arrayDestinationsModel:this.#destinationsModel.get(),
+
       onRollupClick: rollupButtonClickHandler,
       onSubmitClick: pointSubmitHandler,
     });
@@ -60,7 +62,6 @@ export default class ListPresenter {
     function replaceFormToPoint () {
       replace(pointComponent, editingFormComponent);
     }
-
     function pointEditClickHandler () {
       replacePointToForm();
       document.addEventListener('keydown', escKeyDownHandler);
@@ -75,6 +76,6 @@ export default class ListPresenter {
     }
 
     render(pointComponent, this.pointsContainerView.element);
-  }
+  };
 
 }

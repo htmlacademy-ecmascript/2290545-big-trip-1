@@ -17,7 +17,6 @@ export default class EditingFormView extends AbstractView {
     this.#arrayDestinationsModel = arrayDestinationsModel;
     this.#rollupClickHandler = onRollupClick;
     this.#onSubmitClick = onSubmitClick;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollupButtonClickHandler);
     this.element.querySelector('.event__save-btn').addEventListener('click', this.#pointSubmitHandler);
   }
 
@@ -30,10 +29,6 @@ export default class EditingFormView extends AbstractView {
       arrayDestinationsModel: this.#arrayDestinationsModel,
     });
   }
-  #rollupButtonClickHandler = (evt) => {
-    evt.preventDefault();
-    this.#rollupClickHandler();
-  };
 
   #pointSubmitHandler = (evt) => {
     evt.preventDefault();
