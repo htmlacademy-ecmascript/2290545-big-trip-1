@@ -1,4 +1,4 @@
-import{formatSrtingToDateTime, capitalize } from '../../utils.js';
+import{formatSrtingToDateTime, capitalize } from '../../utils/point-utils.js';
 import { TYPES } from '../../const.js';
 
 function showType(types, type) {

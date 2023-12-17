@@ -50,6 +50,18 @@ export function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+export function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+export function isPointPresent(point) {
+  return dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
+}
+
+export function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
 export function capitalize(string) {
   return `${string[0].toUpperCase()}${string.slice(1)}`;
 }
