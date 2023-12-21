@@ -20,17 +20,16 @@ export default class ListPresenter {
   }
 
   init() {
-    render(new FilterView(), filtersContainer);
     render(new SortView(), tripEventsContainer);
     render(this.pointsContainerView, tripEventsContainer);
 
-    if (this.#pointsModel.points.length) {
+    if (this.#pointsModel.get().length) {
       render(new SortView(), tripEventsContainer);
       render(this.pointsContainerView, tripEventsContainer);
 
     const points = this.#pointsModel.get();
     for (let i = 0; i < points.length; i++) {
-      this.#renderPoint(points[i])
+      this.#renderPoint(points[i])}
 
     }else{
         render(new PointListEmptyView(), tripEventsContainer);

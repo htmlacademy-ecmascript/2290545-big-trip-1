@@ -1,4 +1,4 @@
-/*
+
 export const mockPoints = [
   {
     'id': '01de1c72-44d0-4af3-bb86-a7cf9fe723d9',
@@ -257,4 +257,4 @@ export const mockPoints = [
     ]
   }
 ];
-*/
+
