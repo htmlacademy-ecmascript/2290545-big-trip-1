@@ -1,4 +1,4 @@
-import { formatStringToTime, formatStringToShortDate, getPointDuration } from '../../utils.js';
+import { formatStringToTime, formatStringToShortDate, getPointDuration } from '../../utils/point-utils';
 
 function showOffers (pointOffers, offers) {
   return pointOffers.map((item) => item.id === offers.find((elem) => elem === item.id) ? (

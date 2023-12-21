@@ -1,10 +1,10 @@
 import {render} from '../framework/render.js';
-import FilterView, {filtersContainer} from '../view/filters-view.js';
 import SortView, {tripEventsContainer} from '../view/sort-view.js';
 import EditingFormView from '../view/form/editing-form-view.js';
 import PointsContainerView from '../view/points-container-view.js';
 import PointView from '../view/point/point-viewt.js';
 import {replace} from '../framework/render.js';
+import PointListEmptyView from '../view/point-list-empty-view.js';
 
 export default class ListPresenter {
   #pointsModel = null;
@@ -20,13 +20,20 @@ export default class ListPresenter {
   }
 
   init() {
-    render(new FilterView(), filtersContainer);
     render(new SortView(), tripEventsContainer);
     render(this.pointsContainerView, tripEventsContainer);
 
-    const points = this.#pointsModel.get();
-    for (let i = 0; i < points.length; i++) {
-      this.#renderPoint(points[i]);
+    if (this.#pointsModel.get().length) {
+
+      render(this.pointsContainerView, tripEventsContainer);
+
+      const points = this.#pointsModel.get();
+      for (let i = 0; i < points.length; i++) {
+        this.#renderPoint(points[i]);
+      }
+
+    }else{
+      render(new PointListEmptyView(), tripEventsContainer);
     }
   }
 
