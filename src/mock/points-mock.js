@@ -232,8 +232,8 @@ export const mockPoints = [
   {
     'id': 'd281489e-40a3-49e1-b772-db0e19794697',
     'type': 'train',
-    'dateFrom': '2023-11-14T11:43:57.649Z',
-    'dateTo': '2023-11-15T07:46:49.840Z',
+    'dateFrom': '2024-01-09T11:43:57.649Z',
+    'dateTo': '2024-01-15T07:46:49.840Z',
     'destination': 'a956955a-4b89-4deb-b437-977a20d600a9',
     'basePrice': 1000,
     'isFavorite': false,
@@ -246,8 +246,8 @@ export const mockPoints = [
   {
     'id': 'b78f643a-b119-4829-8657-706820f961bb',
     'type': 'restaurant',
-    'dateFrom': '2023-11-15T07:46:49.840Z',
-    'dateTo': '2023-11-15T23:53:21.967Z',
+    'dateFrom': '2024-01-15T07:46:49.840Z',
+    'dateTo': '2024-01-15T23:53:21.967Z',
     'destination': '96e2cb7e-16ff-4332-94ba-e399fff15b99',
     'basePrice': 300,
     'isFavorite': false,

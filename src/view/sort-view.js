@@ -1,5 +1,4 @@
 import AbstractView from '../framework/view/abstract-view';
-export const tripEventsContainer = document.querySelector('.trip-events');
 
 function createFilterTemplate() {
   return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
