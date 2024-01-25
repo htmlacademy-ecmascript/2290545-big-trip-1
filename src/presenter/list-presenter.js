@@ -6,7 +6,7 @@ import PointView from '../view/point/point-viewt.js';
 import {replace} from '../framework/render.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
 import PointPresenter from './point-presenter.js';
-import { updateItem } from '../utils/common.js';
+import {updateItem} from '../utils/common.js';
 
 export default class ListPresenter {
   #container = null;
@@ -15,7 +15,7 @@ export default class ListPresenter {
   #offersModel = null;
   #sortComponent = new SortView();
   #pointListEmptyComponent = new PointListEmptyView();
-  #pointsContainerComponent = new PointsContainerView();
+  #pointsContainerComponent = #pointsContainerView();
 
   #listPoints = [];
   #pointPresenters = new Map();
@@ -29,11 +29,11 @@ export default class ListPresenter {
 
   init() {
     render(new SortView(), tripEventsContainer);
-    render(this.pointsContainerView, tripEventsContainer);
+    render(this.#container, tripEventsContainer);
 
     if (this.#pointsModel.get().length) {
 
-      render(this.pointsContainerView, tripEventsContainer);
+      render(this.#container, tripEventsContainer);
 
       const points = this.#pointsModel.get();
       for (let i = 0; i < points.length; i++) {
@@ -43,6 +43,8 @@ export default class ListPresenter {
     }else{
       render(new PointListEmptyView(), tripEventsContainer);
     }
+    #handlePointChange = () => {};
+    #handleModeChange = () => {};
   }
 
   #renderPoint = (point) => {
@@ -54,35 +56,5 @@ export default class ListPresenter {
       onDataChange: this.#handlePointChange,
       onModeChange: this.#handleModeChange,
     });
-
-    function escKeyDownHandler (evt) {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceFormToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    }
-
-    function replacePointToForm () {
-      replace(editingFormComponent, pointComponent);
-    }
-    function replaceFormToPoint () {
-      replace(pointComponent, editingFormComponent);
-    }
-    function pointEditClickHandler () {
-      replacePointToForm();
-      document.addEventListener('keydown', escKeyDownHandler);
-    }
-    function rollupButtonClickHandler () {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    }
-    function pointSubmitHandler () {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    }
-
-    render(pointComponent, this.pointsContainerView.element);
-  };
-
-}
+    pointPresenter.init(point);
+};
