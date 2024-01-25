@@ -1,12 +1,8 @@
 import {render} from '../framework/render.js';
 import SortView from '../view/sort-view.js';
-import EditingFormView from '../view/form/editing-form-view.js';
 import PointsContainerView from '../view/points-container-view.js';
-import PointView from '../view/point/point-viewt.js';
-import {replace} from '../framework/render.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
 import PointPresenter from './point-presenter.js';
-import {updateItem} from '../utils/common.js';
 
 export default class ListPresenter {
   #container = null;
@@ -15,9 +11,8 @@ export default class ListPresenter {
   #offersModel = null;
   #sortComponent = new SortView();
   #pointListEmptyComponent = new PointListEmptyView();
-  #pointsContainerComponent = #pointsContainerView();
+  #pointsContainerView = new PointsContainerView();
 
-  #listPoints = [];
   #pointPresenters = new Map();
 
   constructor ({container, pointsModel, destinationsModel, offersModel}) {
@@ -43,18 +38,27 @@ export default class ListPresenter {
     }else{
       render(new PointListEmptyView(), this.#container);
     }
-    #handlePointChange = () => {};
-    #handleModeChange = () => {};
   }
+
+  #handlePointChange = (point) => {
+    this.#pointsModel.update(point);
+    this.#pointPresenters.get(point.id).init(point);
+  };
+
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
 
   #renderPoint = (point) => {
 
     const pointPresenter = new PointPresenter({
-      pointsContainer: this.#pointsContainerComponent.element,
+      pointsContainer: this.#pointsContainerView.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handlePointChange,
       onModeChange: this.#handleModeChange,
     });
     pointPresenter.init(point);
-};
+    this.#pointPresenters.set(point.id, pointPresenter);
+  };
+}

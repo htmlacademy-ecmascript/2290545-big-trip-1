@@ -117,5 +117,12 @@ export default class PointPresenter {
     this.#handleDataChange(point);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
+  resetView() {
+    if (this.#mode !== Mode.DEFAULT) {
+      this.#replaceFormToPoint();
+      document.removeEventListener('keydown', this.#escKeyDownHandler);
+    }
+  }
+
 
 }
