@@ -28,12 +28,12 @@ export default class ListPresenter {
   }
 
   init() {
-    render(new SortView(), tripEventsContainer);
-    render(this.#container, tripEventsContainer);
+    render(new SortView(), this.#container);
+    render(this.#pointsContainerView, this.#container);
 
     if (this.#pointsModel.get().length) {
 
-      render(this.#container, tripEventsContainer);
+      render(this.#pointsContainerView, this.#container);
 
       const points = this.#pointsModel.get();
       for (let i = 0; i < points.length; i++) {
@@ -41,7 +41,7 @@ export default class ListPresenter {
       }
 
     }else{
-      render(new PointListEmptyView(), tripEventsContainer);
+      render(new PointListEmptyView(), this.#container);
     }
     #handlePointChange = () => {};
     #handleModeChange = () => {};
