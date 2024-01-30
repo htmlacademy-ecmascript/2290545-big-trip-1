@@ -32,6 +32,6 @@ export default class EditingFormView extends AbstractView {
 
   #pointSubmitHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitClick(this.#point);
+    this.#rollupClickHandler();
   };
 }
