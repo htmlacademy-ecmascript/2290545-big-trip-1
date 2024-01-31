@@ -1,31 +1,34 @@
 import {render} from '../framework/render.js';
-import SortView, {tripEventsContainer} from '../view/sort-view.js';
-import EditingFormView from '../view/form/editing-form-view.js';
+import SortView from '../view/sort-view.js';
 import PointsContainerView from '../view/points-container-view.js';
-import PointView from '../view/point/point-viewt.js';
-import {replace} from '../framework/render.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
+import PointPresenter from './point-presenter.js';
 
 export default class ListPresenter {
+  #container = null;
   #pointsModel = null;
   #destinationsModel = null;
   #offersModel = null;
+  #sortComponent = new SortView();
+  #pointListEmptyComponent = new PointListEmptyView();
+  #pointsContainerView = new PointsContainerView();
 
-  pointsContainerView = new PointsContainerView();
+  #pointPresenters = new Map();
 
-  constructor ({pointsModel, destinationsModel, offersModel}) {
+  constructor ({container, pointsModel, destinationsModel, offersModel}) {
+    this.#container = container;
     this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
   }
 
   init() {
-    render(new SortView(), tripEventsContainer);
-    render(this.pointsContainerView, tripEventsContainer);
+    render(new SortView(), this.#container);
+    render(this.#pointsContainerView, this.#container);
 
     if (this.#pointsModel.get().length) {
 
-      render(this.pointsContainerView, tripEventsContainer);
+      render(this.#pointsContainerView, this.#container);
 
       const points = this.#pointsModel.get();
       for (let i = 0; i < points.length; i++) {
@@ -33,56 +36,29 @@ export default class ListPresenter {
       }
 
     }else{
-      render(new PointListEmptyView(), tripEventsContainer);
+      render(new PointListEmptyView(), this.#container);
     }
   }
 
-  #renderPoint = (point) => {
-
-    const pointComponent = new PointView({
-      point,
-      pointDestination: this.#destinationsModel.getById(point.destination),
-      pointOffers: this.#offersModel.getByType(point.type),
-      onEditClick: pointEditClickHandler,
-    });
-    const editingFormComponent = new EditingFormView({
-      point,
-      pointDestination: this.#destinationsModel.getById(point.destination),
-      pointOffers: this.#offersModel.getByType(point.type),
-      arrayDestinationsModel:this.#destinationsModel.get(),
-
-      onRollupClick: rollupButtonClickHandler,
-      onSubmitClick: pointSubmitHandler,
-    });
-
-    function escKeyDownHandler (evt) {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceFormToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    }
-
-    function replacePointToForm () {
-      replace(editingFormComponent, pointComponent);
-    }
-    function replaceFormToPoint () {
-      replace(pointComponent, editingFormComponent);
-    }
-    function pointEditClickHandler () {
-      replacePointToForm();
-      document.addEventListener('keydown', escKeyDownHandler);
-    }
-    function rollupButtonClickHandler () {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    }
-    function pointSubmitHandler () {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    }
-
-    render(pointComponent, this.pointsContainerView.element);
+  #handlePointChange = (point) => {
+    this.#pointsModel.update(point);
+    this.#pointPresenters.get(point.id).init(point);
   };
 
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
+
+  #renderPoint = (point) => {
+
+    const pointPresenter = new PointPresenter({
+      pointsContainer: this.#pointsContainerView.element,
+      destinationsModel: this.#destinationsModel,
+      offersModel: this.#offersModel,
+      onDataChange: this.#handlePointChange,
+      onModeChange: this.#handleModeChange,
+    });
+    pointPresenter.init(point);
+    this.#pointPresenters.set(point.id, pointPresenter);
+  };
 }

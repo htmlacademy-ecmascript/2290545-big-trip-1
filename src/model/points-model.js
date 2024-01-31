@@ -1,3 +1,4 @@
+import {updateItem} from '../utils/common.js';
 export default class PointsModel {
   #points = null;
   constructor(points) {
@@ -6,6 +7,10 @@ export default class PointsModel {
 
   get() {
     return this.#points;
+  }
+
+  update(point){
+    updateItem(this.#points, point);
   }
 
 }
