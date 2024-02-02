@@ -6,3 +6,11 @@ export const FilterType = {
   PRESENT:'present',
   PAST:'past',
 };
+
+export const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFER: 'offer',
+};
