@@ -31,7 +31,7 @@ export default class ListPresenter {
 
   init() {
     this.#listPoints = [...this.#pointsModel.points];
-    this.#sourcedListPoints = [...this.#pointsModel.points]; // сохраним исходный массив
+    this.#sourcedListPoints = [...this.#pointsModel.get()]; // сохраним исходный массив
 
     if (this.#listPoints.length) {
       this.#renderSort();
