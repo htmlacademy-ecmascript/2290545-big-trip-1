@@ -19,17 +19,16 @@ const DATE_FORMAT = {
   watchMinute: 'HH:mm',
 };
 
-export const formatSrtingToDateTime = (inputDate) =>
+export const formatSrtingToDateTime = (inputDate) =>// полная дата
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.fullData) : '';
 
-export const formatStringToShortDate = (inputDate) =>
+export const formatStringToShortDate = (inputDate) =>//месяц день малая
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.monthDay) : '';
 
 export const formatStringToTime = (inputDate) =>// часы/минуты
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.watchMinute) : '';
 
-
-export const getPointDuration = (dateFrom, dateTo) => {
+export const getPointDuration = (dateFrom, dateTo) => {//время нахождения в точке
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
   let pointDuration = 0;
   switch (true){
@@ -46,10 +45,6 @@ export const getPointDuration = (dateFrom, dateTo) => {
   return pointDuration;
 };
 
-export function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 export function isPointFuture(point) {
   return dayjs().isBefore(point.dateFrom);
 }
@@ -65,3 +60,16 @@ export function isPointPast(point) {
 export function capitalize(string) {
   return `${string[0].toUpperCase()}${string.slice(1)}`;
 }
+
+export const getPointsPriceDifference = (pointA, pointB) =>{
+  const pointAPrice = pointA.basePrice;
+  const pointBPrice = pointB.basePrice;
+  return pointBPrice - pointAPrice;
+};
+
+export const getPointsTimeDifference = (pointA, pointB) =>{
+  const pointADuration = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+  const pointBDuration = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
+
+  return pointBDuration - pointADuration;
+};
