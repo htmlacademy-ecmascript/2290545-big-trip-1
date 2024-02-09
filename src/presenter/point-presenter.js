@@ -45,7 +45,7 @@ export default class PointPresenter {
       point,
       pointDestination: this.#destinationsModel.getById(point.destination),
       pointOffers: this.#offersModel.getByType(point.type),
-      arrayDestinationsModel: this.#destinationsModel.this.get(),
+      arrayDestinationsModel: this.#destinationsModel.get(),
       onRollupClick: this.#rollupButtonClickHandler,
       onSubmitClick: this.#pointSubmitHandler,
     });
