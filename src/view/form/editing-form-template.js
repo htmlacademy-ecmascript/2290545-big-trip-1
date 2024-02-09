@@ -29,7 +29,7 @@ function destinationList(items) {
   return items.map((item) => `<option value="${item.name}"></option>`).join('');
 }
 
-export function createFormTemplate({state, pointDestination, pointOffers, arrayDestinationsModel}){
+export function createFormTemplate({state, pointOffers, arrayDestinationsModel}){
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
   const currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
