@@ -4,16 +4,16 @@ import { createFormTemplate } from './editing-form-template.js';
 export default class EditingFormView extends AbstractStatefulView {
   #point = null;
   #pointDestination = null;
-  #arrayOffers = null;
+  #offersModel = null;
   #arrayDestinationsModel = null;
   #rollupClickHandler = null;
   #onSubmitClick = null;
 
-  constructor({point, pointDestination, arrayOffers, arrayDestinationsModel, onRollupClick, onSubmitClick}){
+  constructor({point, pointDestination, offersModel, arrayDestinationsModel, onRollupClick, onSubmitClick}){
     super();
     this._setState(EditingFormView.parsePointToState({point}));
     this.#pointDestination = pointDestination;
-    this.#arrayOffers = arrayOffers;
+    this.#offersModel = offersModel;
     this.#arrayDestinationsModel = arrayDestinationsModel;
     this.#rollupClickHandler = onRollupClick;
     this.#onSubmitClick = onSubmitClick;
@@ -25,7 +25,7 @@ export default class EditingFormView extends AbstractStatefulView {
     return createFormTemplate({
       state: this._state,
       pointDestination: this.#pointDestination,
-      arrayOffers: this.#arrayOffers,
+      offersModel: this.#offersModel,
       arrayDestinationsModel: this.#arrayDestinationsModel,
     });
   }
