@@ -3,26 +3,26 @@ import { createEditFormTemplate } from './editing-form-template.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-export default class EditingFormView extends AbstractStatefulView {
+export default class CreatingFormView extends AbstractStatefulView {
   #point = null;
   #pointDestination = null;
   #offersModel = null;
   #arrayDestinationsModel = null;
   #rollupClickHandler = null;
-  #onSubmitClick = null;
   #deleteClickHandler = null;
+  #onSubmitClick = null;
   #datePickerFrom = null;
   #datePickerTo = null;
 
   constructor({point, pointDestination, offersModel, arrayDestinationsModel, onRollupClick, onDeleteClick, onSubmitClick}){
     super();
-    this._setState(EditingFormView.parsePointToState({point}));
+    this._setState(CreatingFormView.parsePointToState({point}));
     this.#pointDestination = pointDestination;
     this.#offersModel = offersModel;
     this.#arrayDestinationsModel = arrayDestinationsModel;
     this.#rollupClickHandler = onRollupClick;
-    this.#onSubmitClick = onSubmitClick;
     this.#deleteClickHandler = onDeleteClick;
+    this.#onSubmitClick = onSubmitClick;
 
     this._restoreHandlers();
   }
@@ -57,11 +57,12 @@ export default class EditingFormView extends AbstractStatefulView {
   _restoreHandlers = () => {
     this.element.querySelector('.event__input--destination').addEventListener('change',this.#destinationChangeHandler);
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollupButtonClickHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formDeleteClickHandler);
     this.element.querySelector('.event__save-btn').addEventListener('click', this.#pointSubmitHandler);
-    this.element.querySelector('.event__input--price').addEventListener('change',this.#priceChangeHandler);//
     this.element.querySelector('.event__input--price').addEventListener('change',this.#priceChangeHandler);
     this.element.querySelector('.event__type-group').addEventListener('change',this.#typeChangeHandler);
     this.element.querySelector('.event__available-offers').addEventListener('change',this.#offersChangeHandler);
+
     this.#setDatepicker();
   };
 
@@ -91,7 +92,7 @@ export default class EditingFormView extends AbstractStatefulView {
     evt.preventDefault();
     const selectedDistination = this.#arrayDestinationsModel.find((elem) => elem.name === evt.target.value);
     const selectedDistinationId = (selectedDistination) ? selectedDistination.id : null;
-    if (selectedDistination === undefined) {
+    if (!selectedDistination) {
       return;
     }
     this.updateElement({
@@ -109,12 +110,12 @@ export default class EditingFormView extends AbstractStatefulView {
 
   #formDeleteClickHandler = (evt) => {
     evt.preventDefault();
-    this.#deleteClickHandler(EditingFormView.parseStateToPoint(this._state));
+    this.#deleteClickHandler(CreatingFormView.parseStateToPoint(this._state));
   };
 
   #pointSubmitHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitClick(EditingFormView.parseStateToPoint(this._state));
+    this.#onSubmitClick(CreatingFormView.parseStateToPoint(this._state));
   };
 
   #priceChangeHandler = (evt) => {

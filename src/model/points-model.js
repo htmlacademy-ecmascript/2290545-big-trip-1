@@ -3,6 +3,7 @@ import Observable from '../framework/observable';
 
 export default class PointsModel extends Observable{
   #points = null;
+
   constructor(points) {
     super();
     this.#points = points;
@@ -11,6 +12,7 @@ export default class PointsModel extends Observable{
   get() {
     return this.#points;
   }
+
   updatePoint(updateType, update) {
     const index = this.points.findIndex((item) => item.id === update.id);
 

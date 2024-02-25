@@ -7,7 +7,7 @@ const Mode = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING',
 };
-export default class PointPresenter {
+export default class NewPointPresenter {
   #pointsContainer = null;
   #destinationsModel = null;
   #offersModel = null;
@@ -46,10 +46,10 @@ export default class PointPresenter {
       point,
       pointDestination: this.#destinationsModel.getById(point.destination),
       offersModel: this.#offersModel,
-      arrayDestinationsModel: this.#destinationsModel.get(),
+      arrayDestinationsModel: this.#destinationsModel.destinations,
       onRollupClick: this.#rollupButtonClickHandler,
-      onSubmitClick: this.#pointSubmitHandler,
       onDeleteClick: this.#deleteClickHandler,
+      onSubmitClick: this.#pointSubmitHandler,
     });
 
     if (prevPointComponent === null || prevEditingFormComponent === null) {
@@ -114,7 +114,6 @@ export default class PointPresenter {
     this.#replacePointToForm();
     document.addEventListener('keydown', this.#escKeyDownHandler);
   };
-
   #rollupButtonClickHandler = () => {
     this.#editingFormComponent.reset(this.#point);
     this.#replaceFormToPoint();
@@ -139,5 +138,6 @@ export default class PointPresenter {
     );
   };
 
-
 }
+
+
