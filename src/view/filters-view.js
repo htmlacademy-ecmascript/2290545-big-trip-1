@@ -34,6 +34,8 @@ function createFilterTemplate(filterItems, currentFilterType){
 
 export default class FilterView extends AbstractView {
   #filters = null;
+  #currentFilter = null;
+  #handleFilterTypeChange = null;
 
   constructor({filters, currentFilterType, onFilterTypeChange}){
     super();

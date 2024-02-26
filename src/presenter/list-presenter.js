@@ -102,80 +102,74 @@ export default class ListPresenter {
     }
   };
 
-    #clearBoard({resetSortType = false} = {})
-    {
+  #clearBoard({resetSortType = false} = {}) {
 
-      this.#pointPresenters.forEach((presenter) => presenter.destroy());
-      this.#pointPresenters.clear();
-      remove(this.#sortComponent);
-      remove(this.#loadingComponent);
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+    remove(this.#sortComponent);
+    // remove(this.#loadingComponent);
 
-      if (resetSortType) {
-        this.#currentSortType = SortType.DAY;
-      }
-
-      if (this.#pointListEmptyComponent) {
-        remove(this.#pointListEmptyComponent);
-      }
-
-      if (this.#pointListEmptyComponent) {
-        remove(this.#pointListEmptyComponent);
-      }
-
+    if (resetSortType) {
+      this.#currentSortType = SortType.DAY;
     }
 
-    #handleSortTypeChange = (sortType) => {
-      if (this.#currentSortType === sortType) {
-        return;
-      }
-
-      this.#currentSortType = sortType;
-      this.#clearBoard();
-      this.#renderBoard();
-    };
-
-    #renderSort()
-    {
-      this.#sortComponent = new SortView({
-        currentSortType: this.#currentSortType,
-        onSortTypeChange: this.#handleSortTypeChange
-      });
-      render(this.#sortComponent, this.#container);
-
+    if (this.#pointListEmptyComponent) {
+      remove(this.#pointListEmptyComponent);
     }
 
-    #renderBoard()
-    {
-      if (this.points.length) {
-        this.#renderSort();
-        this.#renderPointsContainer();
-        this.#renderPoints();
-      } else {
-        this.#renderPointListEmpty();
-      }
+    if (this.#pointListEmptyComponent) {
+      remove(this.#pointListEmptyComponent);
     }
 
+  }
 
-    #renderPointListEmpty()
-    {
-      this.#pointListEmptyComponent = new PointListEmptyView({
-        filterType: this.#filterType
-      });
-
-      render(this.#pointListEmptyComponent, this.#container);
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
     }
 
-    #renderPointsContainer()
-    {
-      render(this.#pointsContainerComponent, this.#container);
-    }
+    this.#currentSortType = sortType;
+    this.#clearBoard();
+    this.#renderBoard();
+  };
 
-    #renderPoints()
-    {
-      for (let i = 0; i < this.points.length; i++) {
-        this.#renderPoint(this.points[i]);
-      }
+  #renderSort() {
+    this.#sortComponent = new SortView({
+      currentSortType: this.#currentSortType,
+      onSortTypeChange: this.#handleSortTypeChange
+    });
+    render(this.#sortComponent, this.#container);
+
+  }
+
+  #renderBoard() {
+    if (this.points.length) {
+      this.#renderSort();
+      this.#renderPointsContainer();
+      this.#renderPoints();
+    } else {
+      this.#renderPointListEmpty();
     }
+  }
+
+
+  #renderPointListEmpty() {
+    this.#pointListEmptyComponent = new PointListEmptyView({
+      filterType: this.#filterType
+    });
+
+    render(this.#pointListEmptyComponent, this.#container);
+  }
+
+  #renderPointsContainer() {
+    render(this.#pointsContainerComponent, this.#container);
+  }
+
+  #renderPoints() {
+    for (let i = 0; i < this.points.length; i++) {
+      this.#renderPoint(this.points[i]);
+    }
+  }
 
 
 }

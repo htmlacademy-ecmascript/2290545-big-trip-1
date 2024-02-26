@@ -29,10 +29,12 @@ function createFilterTemplate(currentSortType) {
 
 export default class SortView extends AbstractView {
   #handleSortTypeChange = null;
+  #currentSortType = SortType.DAY;
 
   constructor({currentSortType, onSortTypeChange}) {
     super();
     this.#handleSortTypeChange = onSortTypeChange;
+    this.#currentSortType = currentSortType;
 
     this.element.addEventListener('click', this.#sortTypeChangeHandler);
   }
