@@ -63,6 +63,7 @@ export default class EditingFormView extends AbstractStatefulView {
     this.element.querySelector('.event__type-group').addEventListener('change',this.#typeChangeHandler);
     this.element.querySelector('.event__available-offers').addEventListener('change',this.#offersChangeHandler);
     this.#setDatepicker();
+    this.element.querySelector('.event__reset-btn').addEventListener('click',this.#formDeleteClickHandler);
   };
 
   #typeChangeHandler = (evt) => {
@@ -177,5 +178,8 @@ export default class EditingFormView extends AbstractStatefulView {
   static parseStateToPoint(state) {
     return state.point;
   }
+
+
+
 
 }

@@ -114,6 +114,7 @@ export default class NewPointPresenter {
     this.#replacePointToForm();
     document.addEventListener('keydown', this.#escKeyDownHandler);
   };
+
   #rollupButtonClickHandler = () => {
     this.#editingFormComponent.reset(this.#point);
     this.#replaceFormToPoint();
