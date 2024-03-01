@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { formatSrtingToDateTime } from './utils/point-utils';
 export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 export const FilterType = {
@@ -24,4 +26,22 @@ export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+};
+
+
+export const defaultPoint = {
+  type: 'flight',
+  dateFrom: formatSrtingToDateTime(dayjs()),
+  dateTo: null,
+  destination: null,
+  basePrice: 0,
+  isFavorite: false,
+  offers: [],
+};
+
+export const defaultDestination = {
+  id: 'default',
+  description: '',
+  name: '',
+  pictures: []
 };

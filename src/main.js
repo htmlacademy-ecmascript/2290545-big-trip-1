@@ -20,6 +20,11 @@ const offersModel = new OffersModel(mockOffers);
 const pointsModel = new PointsModel(mockPoints);
 const siteHeaderElement = document.querySelector('.trip-main');
 
+const newPointButtonComponent = new NewPointButtonView({
+  onClick: handleNewTaskButtonClick
+});
+render(newPointButtonComponent, siteHeaderElement);
+
 const filterPresenter = new FilterPresenter({
   container: filterContainer,
   filterModel,
@@ -37,10 +42,6 @@ const listPresenter = new ListPresenter({
   onNewPointDestroy: handleNewPointFormClose
 });
 
-const newPointButtonComponent = new NewPointButtonView({
-  onClick: handleNewTaskButtonClick
-});
-
 function handleNewPointFormClose() {
   newPointButtonComponent.element.disabled = false;
 }
@@ -49,8 +50,5 @@ function handleNewTaskButtonClick() {
   listPresenter.createPoint();
   newPointButtonComponent.element.disabled = true;
 }
-
-render(newPointButtonComponent, siteHeaderElement);
-
 
 listPresenter.init();
