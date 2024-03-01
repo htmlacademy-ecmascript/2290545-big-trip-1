@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../../framework/view/abstract-stateful-view.js';
-import { createEditFormTemplate } from './editing-form-template.js';
+import { createNewPointTemplate } from './creating-form-template.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -28,7 +28,7 @@ export default class CreatingFormView extends AbstractStatefulView {
   }
 
   get template(){
-    return createEditFormTemplate({
+    return createNewPointTemplate({
       state: this._state,
       pointDestination: this.#pointDestination,
       offersModel: this.#offersModel,
@@ -56,7 +56,6 @@ export default class CreatingFormView extends AbstractStatefulView {
 
   _restoreHandlers = () => {
     this.element.querySelector('.event__input--destination').addEventListener('change',this.#destinationChangeHandler);
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollupButtonClickHandler);
     this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formDeleteClickHandler);
     this.element.querySelector('.event__save-btn').addEventListener('click', this.#pointSubmitHandler);
     this.element.querySelector('.event__input--price').addEventListener('change',this.#priceChangeHandler);

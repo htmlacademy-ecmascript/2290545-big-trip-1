@@ -31,7 +31,7 @@ export default class ListPresenter {
     this.#filterModel = filterModel;
 
     this.#newPointPresenter = new NewPointPresenter({
-      pointsContainer: this.#container,
+      pointsContainer: this.#pointsContainerComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,

@@ -1,5 +1,6 @@
 import{formatSrtingToDateTime, capitalize } from '../../utils/point-utils.js';
 import { TYPES, defaultDestination } from '../../const.js';
+import he from 'he';
 
 function showType(types, activeType) {
   return types.map((item) => (` <div class="event__type-item">
@@ -34,7 +35,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
   const {basePrice, type, dateFrom, dateTo, offers} = point;
   const currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
   const {description, pictures, name} = currentDestination ?? defaultDestination;
-  
+
   return `<form class="event event--edit" action="#" method="post">
  <header class="event__header">
    <div class="event__type-wrapper">
@@ -58,7 +59,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
    <div class="event__field-group  event__field-group--destination">
      <label class="event__label  event__type-output" for="event-destination-1">${type}</label>
      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination"
-     placeholder="Chamonix" value="${name}" list="destination-list-1">
+     placeholder="Chamonix" value="${he.encode(name)}" list="destination-list-1">
      <datalist id="destination-list-1">
 
        ${destinationList(arrayDestinationsModel)}
@@ -81,7 +82,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
        <span class="visually-hidden">Price</span>
        &euro;
      </label>
-     <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+     <input class="event__input  event__input--price" id="event-price-1" type="number" min="0" name="event-price" value="${basePrice}">
    </div>
 
    <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
