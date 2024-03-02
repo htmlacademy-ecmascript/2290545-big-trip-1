@@ -1,6 +1,7 @@
-import PointView from '../view/point/point-viewt';
+import PointView from '../view/point/point-view';
 import EditingFormView from '../view/form/editing-form-view';
 import { render, replace, remove } from '../framework/render';
+import { UserAction,UpdateType } from '../const';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -48,6 +49,7 @@ export default class PointPresenter {
       arrayDestinationsModel: this.#destinationsModel.get(),
       onRollupClick: this.#rollupButtonClickHandler,
       onSubmitClick: this.#pointSubmitHandler,
+      onDeleteClick: this.#deleteClickHandler,
     });
 
     if (prevPointComponent === null || prevEditingFormComponent === null) {
@@ -101,7 +103,11 @@ export default class PointPresenter {
   };
 
   #favoriteClickHandler = () => {
-    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      {...this.#point, isFavorite: !this.#point.isFavorite}
+    );
   };
 
   #pointEditClickHandler = () => {
@@ -117,8 +123,21 @@ export default class PointPresenter {
 
   #pointSubmitHandler = (point) => {
     this.#replaceFormToPoint();
-    this.#handleDataChange(point);
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      point
+    );
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
+
+  #deleteClickHandler = (point) => {
+    this.#handleDataChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
+  };
+
 
 }

@@ -2,7 +2,7 @@ import AbstractView from '../framework/view/abstract-view';
 import { capitalize } from '../utils/point-utils.js';
 export const filtersContainer = document.querySelector('.trip-controls__filters');
 
-function createFilterItemTemplite(filter){
+function createFilterItemTemplite(filter, currentFilterType){
   return `<div class="trip-filters__filter">
   <input
   id="filter-${filter.type}"
@@ -11,6 +11,7 @@ function createFilterItemTemplite(filter){
   name="trip-filter"
   value="${filter.type}"
   ${(filter.hasPoints) ? '' : 'disabled'}
+  ${filter.type === currentFilterType ? 'checked' : ''}
   >
   <label class="trip-filters__filter-label"
   for="filter-${filter.type}">${capitalize(filter.type)}</label>
@@ -33,13 +34,24 @@ function createFilterTemplate(filterItems){
 
 export default class FilterView extends AbstractView {
   #filters = null;
+  #currentFilter = null;
+  #handleFilterTypeChange = null;
 
-  constructor({filters}){
+  constructor({filters, currentFilterType, onFilterTypeChange}){
     super();
     this.#filters = filters;
+    this.#currentFilter = currentFilterType;
+    this.#handleFilterTypeChange = onFilterTypeChange;
+
+    this.element.addEventListener('change', this.#filterTypeChangeHandler);
   }
 
   get template() {
-    return createFilterTemplate(this.#filters);
+    return createFilterTemplate(this.#filters, this.#currentFilter);
   }
+
+  #filterTypeChangeHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFilterTypeChange(evt.target.value);
+  };
 }
