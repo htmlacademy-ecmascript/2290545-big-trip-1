@@ -30,7 +30,7 @@ function destinationList(items) {
   return items.map((item) => `<option value="${item.name}"></option>`).join('');
 }
 
-export function createEditFormTemplate({state, offersModel, arrayDestinationsModel, pointDestination}){// pointDestination
+export function createEditFormTemplate({state, offersModel, arrayDestinationsModel }){
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
   const currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);

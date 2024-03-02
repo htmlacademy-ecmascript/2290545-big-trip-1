@@ -12,7 +12,7 @@ export default class FilterPresenter {
   constructor({container, filterModel, pointsModel}) {
     this.#container = container;
     this.#pointsModel = pointsModel;
-    this.#filterModel = filterModel;  
+    this.#filterModel = filterModel;
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
   }

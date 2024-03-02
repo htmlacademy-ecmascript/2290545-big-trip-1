@@ -4,7 +4,6 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 export default class CreatingFormView extends AbstractStatefulView {
-  #point = null;
   #pointDestination = null;
   #offersModel = null;
   #arrayDestinationsModel = null;

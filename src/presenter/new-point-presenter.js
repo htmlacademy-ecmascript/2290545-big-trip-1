@@ -36,7 +36,7 @@ export default class NewPointPresenter {
       onDeleteClick: this.destroy,
       onSubmitClick: this.#pointSubmitHandler,
     });
-console.log(this.#pointsContainer);
+
     render(this.#editingFormComponent, this.#pointsContainer, RenderPosition.AFTERBEGIN);
   }
 

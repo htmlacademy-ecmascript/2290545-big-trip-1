@@ -1,5 +1,4 @@
 import ListPresenter from './presenter/list-presenter.js';
-
 import { mockOffers } from './mock/offers-mock.js';
 import { mockDestinations } from './mock/destinations-mock.js';
 import DestinationsModel from './model/destinations-model.js';

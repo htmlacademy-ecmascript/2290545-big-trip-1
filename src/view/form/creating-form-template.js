@@ -33,7 +33,7 @@ function destinationList(items) {
   return items.map((item) => `<option value="${item.name}"></option>`).join('');
 }
 
-export function createNewPointTemplate({state, offersModel, arrayDestinationsModel, pointDestination}){// pointDestination
+export function createNewPointTemplate({state, offersModel, arrayDestinationsModel }) {
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
   let currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
