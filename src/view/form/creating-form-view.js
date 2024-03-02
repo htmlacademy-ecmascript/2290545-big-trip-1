@@ -176,5 +176,4 @@ export default class CreatingFormView extends AbstractStatefulView {
   static parseStateToPoint(state) {
     return state.point;
   }
-
 }

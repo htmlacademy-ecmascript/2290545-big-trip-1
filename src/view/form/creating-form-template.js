@@ -33,6 +33,20 @@ function destinationList(items) {
   return items.map((item) => `<option value="${item.name}"></option>`).join('');
 }
 
+function showDestination(pictures, description) {
+  return `
+  <section class="event__section  event__section--destination">
+    <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+    <p class="event__destination-description">${description}</p>
+    <div class="event__photos-container">
+      <div class="event__photos-tape">
+        ${showPhotos(pictures)}
+      </div>
+    </div>
+  </section>
+  `;
+}
+
 export function createNewPointTemplate({state, offersModel, arrayDestinationsModel }) {
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
@@ -89,22 +103,15 @@ export function createNewPointTemplate({state, offersModel, arrayDestinationsMod
  </header>
 
  <section class="event__details">
- <section class="event__section  event__section--offers">
- <h3 class="event__section-title  event__section-title--offers">Offers</h3>
- <div class="event__available-offers">
-${showOffers(offersModel, offers, type)}
+  <section class="event__section  event__section--offers">
+  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+  <div class="event__available-offers">
+  ${showOffers(offersModel, offers, type)}
 
  </div>
 </section>
- <section class="event__section  event__section--destination">
-   <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-   <p class="event__destination-description">${description}</p>
-   <div class="event__photos-container">
-     <div class="event__photos-tape">
-       ${showPhotos(pictures)}
-     </div>
-   </div>
+
+ ${name !== '' ? showDestination(pictures, description) : ''}
  </section>
-</section>
-</form>`;
+ </form>`;
 }
