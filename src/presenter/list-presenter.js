@@ -7,6 +7,7 @@ import { SortType, UserAction, UpdateType, FilterType } from '../const.js';
 import { getPointsPriceDifference, getPointsTimeDifference } from '../utils/point-utils.js';
 import { filter } from '../utils/filter-utils.js';
 import NewPointPresenter from './new-point-presenter.js';
+import LoadingView from '../view/loading-view.js';
 
 export default class ListPresenter {
   #container = null;
@@ -18,10 +19,12 @@ export default class ListPresenter {
   #pointListEmptyComponent = null;
   #pointsContainerComponent = new PointsContainerView();
   #newPointPresenter = null;
+  #loadingComponent = new LoadingView();
 
   #pointPresenters = new Map();
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
+  #isLoading = true;
 
   constructor ({container, pointsModel, destinationsModel, offersModel, filterModel, onNewPointDestroy}) {
     this.#container = container;
@@ -52,6 +55,7 @@ export default class ListPresenter {
         return filteredPoints.sort(getPointsPriceDifference);
       case SortType.TIME:
         return filteredPoints.sort(getPointsTimeDifference);
+
     }
 
     return filteredPoints;
@@ -97,7 +101,6 @@ export default class ListPresenter {
       case UserAction.DELETE_POINT:
         this.#pointsModel.deletePoint(updateType, update);
         break;
-    }
   };
 
   #handleModelEvent = (updateType, data) => {
@@ -116,6 +119,12 @@ export default class ListPresenter {
         this.#clearBoard({resetRenderedTaskCount: true, resetSortType: true});
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
+      }
     }
   };
 
@@ -124,7 +133,7 @@ export default class ListPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
     remove(this.#sortComponent);
-    // remove(this.#loadingComponent);
+
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -160,6 +169,10 @@ export default class ListPresenter {
   }
 
   #renderBoard() {
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
     if (this.points.length) {
       this.#renderSort();
       this.#renderPointsContainer();
@@ -168,7 +181,9 @@ export default class ListPresenter {
       this.#renderPointListEmpty();
     }
   }
-
+  #renderLoading() {
+    render(this.#loadingComponent, this.#container);
+  }
 
   #renderPointListEmpty() {
     this.#pointListEmptyComponent = new PointListEmptyView({
