@@ -19,7 +19,7 @@ function createFilterItemTemplite(filter, currentFilterType){
   `;
 }
 
-function createFilterTemplate(filterItems, currentFilterType){
+function createFilterTemplate(filterItems){
 
   const filterItemsTemplite = filterItems
     .map((filter) => createFilterItemTemplite(filter)).join('');
