@@ -23,6 +23,7 @@ export default class PointsApiService extends ApiService {
 
     return parsedResponse;
   }
+
   #adaptToServer(point) {
     const adaptedPoint = {...point,
       'date_from': point.dateFrom,
