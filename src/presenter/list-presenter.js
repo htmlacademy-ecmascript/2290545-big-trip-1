@@ -38,7 +38,8 @@ export default class ListPresenter {
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
-      onDestroy: onNewPointDestroy
+      onDestroy: onNewPointDestroy,
+
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -63,7 +64,12 @@ export default class ListPresenter {
 
 
   init() {
+    this.#isCreating = true;
     this.#renderBoard();
+  }
+
+  isCreating() {
+    return this.#isCreating;
   }
 
   createPoint() {
@@ -101,6 +107,7 @@ export default class ListPresenter {
       case UserAction.DELETE_POINT:
         this.#pointsModel.deletePoint(updateType, update);
         break;
+    }
   };
 
   #handleModelEvent = (updateType, data) => {
@@ -124,7 +131,7 @@ export default class ListPresenter {
         remove(this.#loadingComponent);
         this.#renderBoard();
         break;
-      }
+
     }
   };
 
@@ -173,14 +180,20 @@ export default class ListPresenter {
       this.#renderLoading();
       return;
     }
-    if (this.points.length) {
-      this.#renderSort();
-      this.#renderPointsContainer();
-      this.#renderPoints();
+    if (this.points.length || this.#newPointPresenter.isCreating()) {
+      createPoint() {
+        this.#currentSortType = SortType.DEFAULT;
+        this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+        this.#creatinNewPoint = true;
+        this.#clearBoard();
+        this.#newPointPresenter.init();
+        this.#renderBoard();
+      }
     } else {
       this.#renderPointListEmpty();
     }
   }
+
   #renderLoading() {
     render(this.#loadingComponent, this.#container);
   }

@@ -3,11 +3,6 @@ import { UpdateType } from '../const';
 
 
 export default class PointsModel extends Observable {
-  #pointsApiService = null;
-  #points = [];
-  #adaptToClient = null;
-  #destinationsModel = null;
-  #offerModel = null
 
   constructor({pointsApiService, destinationsModel, offerModel}) {
     super();
@@ -62,6 +57,7 @@ export default class PointsModel extends Observable {
 
       this._notify(UpdateType, update);
     }
+  }
 
     addPoint(UpdateType, update)
     {
@@ -72,6 +68,7 @@ export default class PointsModel extends Observable {
 
       this._notify(UpdateType, update);
     }
+    ;
 
     deletePoint(UpdateType, update)
     {
@@ -88,6 +85,7 @@ export default class PointsModel extends Observable {
 
       this._notify(UpdateType);
     }
+
     #adaptToClient(point)
     {
 
@@ -108,4 +106,4 @@ export default class PointsModel extends Observable {
 
     }
   }
-}
+
