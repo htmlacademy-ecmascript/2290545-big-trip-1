@@ -12,6 +12,8 @@ export default class NewPointPresenter {
   #editingFormComponent = null;
   #newEventButtonElement = null;
 
+  #isCreating = null;
+
   constructor({pointsContainer, destinationsModel, offersModel, onDataChange, onModeChange}) {
     this.#pointsContainer = pointsContainer;
     this.#destinationsModel = destinationsModel;
@@ -22,7 +24,7 @@ export default class NewPointPresenter {
   }
 
   init() {
-
+    this.#isCreating = true;
     if (this.#editingFormComponent !== null) {
       return;
     }
@@ -41,6 +43,7 @@ export default class NewPointPresenter {
   }
 
   destroy = () => {
+    this.#isCreating = false;
     if (this.#editingFormComponent === null) {
       return;
     }
@@ -68,6 +71,9 @@ export default class NewPointPresenter {
     this.destroy();
   };
 
+  isCreating() {
+    return this.#isCreating;
+  }
 }
 
 

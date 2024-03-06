@@ -39,7 +39,6 @@ export default class ListPresenter {
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
-
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -56,20 +55,13 @@ export default class ListPresenter {
         return filteredPoints.sort(getPointsPriceDifference);
       case SortType.TIME:
         return filteredPoints.sort(getPointsTimeDifference);
-
     }
 
     return filteredPoints;
   }
 
-
   init() {
-    this.#isCreating = true;
     this.#renderBoard();
-  }
-
-  isCreating() {
-    return this.#isCreating;
   }
 
   createPoint() {
@@ -131,7 +123,6 @@ export default class ListPresenter {
         remove(this.#loadingComponent);
         this.#renderBoard();
         break;
-
     }
   };
 
@@ -166,6 +157,14 @@ export default class ListPresenter {
     this.#renderBoard();
   };
 
+  createPoint() {
+    this.#currentSortType = SortType.DEFAULT;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    this.#clearBoard();
+    this.#newPointPresenter.init();
+    this.#renderBoard();
+  }
+
   #renderSort() {
     this.#sortComponent = new SortView({
       currentSortType: this.#currentSortType,
@@ -181,14 +180,9 @@ export default class ListPresenter {
       return;
     }
     if (this.points.length || this.#newPointPresenter.isCreating()) {
-      createPoint() {
-        this.#currentSortType = SortType.DEFAULT;
-        this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-        this.#creatinNewPoint = true;
-        this.#clearBoard();
-        this.#newPointPresenter.init();
-        this.#renderBoard();
-      }
+      this.#renderSort();
+      this.#renderPointsContainer();
+      this.#renderPoints();
     } else {
       this.#renderPointListEmpty();
     }
