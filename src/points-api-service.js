@@ -3,6 +3,8 @@ import ApiService from './framework/api-service';
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
 };
 
 export default class PointsApiService extends ApiService {
@@ -25,6 +27,28 @@ export default class PointsApiService extends ApiService {
     const response = await this._load({url: 'points'});
     const parsedResponse = await ApiService.parseResponse(response);
     return parsedResponse.map((point) => this.#adaptToClient(point));
+  }
+
+  async addPoint(point) {
+    const response = await this._load({
+      url: 'point',
+      method: Method.POST,
+      body: JSON.stringify(this.#adaptToServer(point)),
+      headers: new Headers({'Content-Type': 'application/json'}),
+    });
+
+    const parsedResponse = await ApiService.parseResponse(response);
+
+    return parsedResponse;
+  }
+
+  async deletePoint(point) {
+    const response = await this._load({
+      url: `tasks/${point.id}`,
+      method: Method.DELETE,
+    });
+
+    return response;
   }
 
   async updatePoint(point) {
