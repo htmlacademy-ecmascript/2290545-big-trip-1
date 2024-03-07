@@ -113,6 +113,7 @@ export default class EditingFormView extends AbstractStatefulView {
   };
 
   #pointSubmitHandler = (evt) => {
+
     evt.preventDefault();
     this.#onSubmitClick(EditingFormView.parseStateToPoint(this._state));
   };
@@ -127,6 +128,7 @@ export default class EditingFormView extends AbstractStatefulView {
   };
 
   #dateFromChangeHandler = ([userDate]) => {
+    console.log('userDate', userDate);
     this.updateElement({
       point: {
         ...this._state.point,
@@ -136,6 +138,7 @@ export default class EditingFormView extends AbstractStatefulView {
   };
 
   #dateToChangeHandler = ([userDate]) => {
+
     this.updateElement({
       point: {
         ...this._state.point,
@@ -155,6 +158,8 @@ export default class EditingFormView extends AbstractStatefulView {
       },
       'time_24hr':true,
     };
+    console.log('dateFrom', this._state.point.dateFrom);
+
     this.#datePickerFrom = flatpickr(dateFromInput, {
       ...commonConfig,
       defaultDate:this._state.point.dateFrom,
