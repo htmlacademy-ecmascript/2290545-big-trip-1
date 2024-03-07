@@ -75,26 +75,26 @@ export default class PointsModel extends Observable {
     }
   }
 
-    async deletePoint(updateType, update) {
+  async deletePoint(updateType, update) {
     const index = this.#points.findIndex((item) => item.id === update.id);
 
     if (index === -1) {
       throw new Error('Can\'t delete unexisting point');
     }
 
-      try {
-        // Обратите внимание, метод удаления задачи на сервере
-        // ничего не возвращает. Это и верно,
-        // ведь что можно вернуть при удалении задачи?
-        await this.#tasksApiService.deletePoint(update);
-        this.#points = [
-          ...this.#points.slice(0, index),
-          ...this.#points.slice(index + 1),
-        ];
-        this._notify(updateType);
-      } catch(err) {
-        throw new Error('Can\'t delete point');
-      }
+    try {
+      // Обратите внимание, метод удаления задачи на сервере
+      // ничего не возвращает. Это и верно,
+      // ведь что можно вернуть при удалении задачи?
+      await this.#pointsApiService.deletePoint(update);
+      this.#points = [
+        ...this.#points.slice(0, index),
+        ...this.#points.slice(index + 1),
+      ];
+      this._notify(updateType);
+    } catch (err) {
+      throw new Error('Can\'t delete point');
+    }
 
     this.#points = [
       ...this.#points.slice(0, index),
@@ -104,21 +104,21 @@ export default class PointsModel extends Observable {
     this._notify(updateType);
   }
 
-  // #adaptToClient(point) {
-  //   const adaptedPoint = {
-  //     ...point,
-  //     dateFrom: point['date_from'],
-  //     dateTo: point['date_to'],
-  //     basePrice: point['base_price'],
-  //     isFavorite: point['is_favorite'],
-  //   };
+  #adaptToClient(point) {
+    const adaptedPoint = {
+      ...point,
+      dateFrom: point['date_from'],
+      dateTo: point['date_to'],
+      basePrice: point['base_price'],
+      isFavorite: point['is_favorite'],
+    };
 
-  //   delete adaptedPoint['date_from'];
-  //   delete adaptedPoint['date_to'];
-  //   delete adaptedPoint['base_price'];
-  //   delete adaptedPoint['is_favorite'];
+    delete adaptedPoint['date_from'];
+    delete adaptedPoint['date_to'];
+    delete adaptedPoint['base_price'];
+    delete adaptedPoint['is_favorite'];
 
-  //   return adaptedPoint;
-  // }
+    return adaptedPoint;
+  }
 }
 

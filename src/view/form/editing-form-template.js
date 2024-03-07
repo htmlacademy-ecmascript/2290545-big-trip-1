@@ -35,6 +35,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
   const {basePrice, type, dateFrom, dateTo, offers} = point;
   const currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
   const {description, pictures, name} = currentDestination ?? defaultDestination;
+ console.log(formatSrtingToDateTime(dateFrom));
 
   return `<form class="event event--edit" action="#" method="post">
  <header class="event__header">
