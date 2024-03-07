@@ -7,6 +7,7 @@ import { SortType, UserAction, UpdateType, FilterType } from '../const.js';
 import { getPointsPriceDifference, getPointsTimeDifference } from '../utils/point-utils.js';
 import { filter } from '../utils/filter-utils.js';
 import NewPointPresenter from './new-point-presenter.js';
+import LoadingView from '../view/loading-view.js';
 
 export default class ListPresenter {
   #container = null;
@@ -18,10 +19,12 @@ export default class ListPresenter {
   #pointListEmptyComponent = null;
   #pointsContainerComponent = new PointsContainerView();
   #newPointPresenter = null;
+  #loadingComponent = new LoadingView();
 
   #pointPresenters = new Map();
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
+  #isLoading = true;
 
   constructor ({container, pointsModel, destinationsModel, offersModel, filterModel, onNewPointDestroy}) {
     this.#container = container;
@@ -35,7 +38,7 @@ export default class ListPresenter {
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
-      onDestroy: onNewPointDestroy
+      onDestroy: onNewPointDestroy,
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -56,7 +59,6 @@ export default class ListPresenter {
 
     return filteredPoints;
   }
-
 
   init() {
     this.#renderBoard();
@@ -116,6 +118,11 @@ export default class ListPresenter {
         this.#clearBoard({resetRenderedTaskCount: true, resetSortType: true});
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
     }
   };
 
@@ -124,7 +131,7 @@ export default class ListPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
     remove(this.#sortComponent);
-    // remove(this.#loadingComponent);
+
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -150,6 +157,14 @@ export default class ListPresenter {
     this.#renderBoard();
   };
 
+  createPoint() {
+    this.#currentSortType = SortType.DEFAULT;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    this.#clearBoard();
+    this.#newPointPresenter.init();
+    this.#renderBoard();
+  }
+
   #renderSort() {
     this.#sortComponent = new SortView({
       currentSortType: this.#currentSortType,
@@ -160,7 +175,11 @@ export default class ListPresenter {
   }
 
   #renderBoard() {
-    if (this.points.length) {
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
+    if (this.points.length || this.#newPointPresenter.isCreating()) {
       this.#renderSort();
       this.#renderPointsContainer();
       this.#renderPoints();
@@ -169,6 +188,9 @@ export default class ListPresenter {
     }
   }
 
+  #renderLoading() {
+    render(this.#loadingComponent, this.#container);
+  }
 
   #renderPointListEmpty() {
     this.#pointListEmptyComponent = new PointListEmptyView({
