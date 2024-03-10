@@ -17,7 +17,6 @@ function createTripInfoTemplate({ isEmpty, title, duration, cost }) {
     </section>`
   );
 }
-
 export default class TripInfoView extends AbstractView {
   #isEmpty = null;
   #title = null;

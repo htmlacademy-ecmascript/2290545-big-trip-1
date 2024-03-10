@@ -4,7 +4,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 export default class EditingFormView extends AbstractStatefulView {
-  #point = null;
+
   #pointDestination = null;
   #offersModel = null;
   #arrayDestinationsModel = null;
@@ -95,7 +95,7 @@ export default class EditingFormView extends AbstractStatefulView {
     this.updateElement({
       point: {
         ...this._state.point,
-        destination: selectedDistinationId ?? "",
+        destination: selectedDistinationId ?? '',
       }
     });
   };

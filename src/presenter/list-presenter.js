@@ -74,12 +74,6 @@ export default class ListPresenter {
     this.#renderBoard();
   }
 
-  createPoint() {
-    this.#currentSortType = SortType.DEFAULT;
-    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newPointPresenter.init();
-  }
-
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
       pointsContainer: this.#pointsContainerComponent.element,
@@ -239,6 +233,4 @@ export default class ListPresenter {
       this.#renderPoint(this.points[i]);
     }
   }
-
-
 }

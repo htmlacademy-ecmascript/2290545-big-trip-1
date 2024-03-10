@@ -158,7 +158,6 @@ export default class PointPresenter {
   };
 
   #pointSubmitHandler = (point) => {
-    // this.#replaceFormToPoint();
     this.#handleDataChange(
       UserAction.UPDATE_POINT,
       UpdateType.MINOR,
