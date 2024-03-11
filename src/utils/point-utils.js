@@ -19,13 +19,13 @@ const DATE_FORMAT = {
   watchMinute: 'HH:mm',
 };
 
-export const formatSrtingToDateTime = (inputDate) =>// полная дата
+export const formatSrtingToDateTime = (inputDate) =>
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.fullData) : '';
 
-export const formatStringToShortDate = (inputDate) =>//месяц день малая
+export const formatStringToShortDate = (inputDate) =>
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.monthDay) : '';
 
-export const formatStringToTime = (inputDate) =>// часы/минуты
+export const formatStringToTime = (inputDate) =>
   inputDate ? dayjs(inputDate).format(DATE_FORMAT.watchMinute) : '';
 
 export const getPointDuration = (dateFrom, dateTo) => {//время нахождения в точке
@@ -73,3 +73,7 @@ export const getPointsTimeDifference = (pointA, pointB) =>{
 
   return pointBDuration - pointADuration;
 };
+
+export function getPointsByDate (a, b) {
+  return dayjs(a.dateFrom) > dayjs(b.dateFrom) ? 1 : -1;
+}

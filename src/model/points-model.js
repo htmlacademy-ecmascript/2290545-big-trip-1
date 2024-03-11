@@ -25,7 +25,6 @@ export default class PointsModel extends Observable {
 
       this._notify(UpdateType.INIT, {isError: false});
     } catch (e) {
-      console.log(e);
       this.#points = [];
       this._notify(UpdateType.INIT, {isError: true});
     }
@@ -55,7 +54,6 @@ export default class PointsModel extends Observable {
       ];
       this._notify(updateType, updatedPoint);
     } catch (err) {
-      console.error(err);
       throw new Error('Can\'t update point');
     }
   }

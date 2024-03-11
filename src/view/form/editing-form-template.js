@@ -10,9 +10,16 @@ function showType(types, activeType) {
 </div>`)).join('');
 }
 
-function showOffers(offersByType, selectedOffers) {
-  return offersByType.map((item) => (`<div class="event__offer-selector">
-  <input class="event__offer-checkbox  visually-hidden" data-offer-id="${item.id}" id="event-offer-${item.id}" type="checkbox" name="event-offer-seats"
+function showOffers(offersModel, selectedOffers, type) {
+  const offersByType = offersModel.getByType(type);
+
+  if (offersByType.length === 0) {
+    return '<div class="event__available-offers"></div>';
+  }
+
+  const html = offersByType.map((item) => (`<div class="event__offer-selector">
+  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${item.id}"
+  data-offer-id="${item.id}" type="checkbox" name="event-offer-seats"
   ${selectedOffers.find((elem) => elem === item.id) ? 'checked' : ''}>
   <label class="event__offer-label" for="event-offer-${item.id}">
     <span class="event__offer-title">${item.title}</span>
@@ -20,6 +27,15 @@ function showOffers(offersByType, selectedOffers) {
     <span class="event__offer-price">${item.price}</span>
   </label>
 </div>`)).join('');
+
+  return `
+    <section class="event__section  event__section--offers">
+      <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+      <div class="event__available-offers">
+        ${html}
+      </div>
+    </section>
+  `
 }
 
 function showPhotos(photos){
@@ -98,13 +114,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
 
  <section class="event__details">
 
- <section class="event__section  event__section--offers">
- <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-
- <div class="event__available-offers">
- ${showOffers(offersModel.getByType(type), offers)}
- </div>
-</section>
+ ${showOffers(offersModel, offers, type)}
 
  <section class="event__section  event__section--destination">
    <h3 class="event__section-title  event__section-title--destination">Destination</h3>

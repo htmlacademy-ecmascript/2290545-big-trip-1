@@ -7,6 +7,7 @@ const Mode = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING',
 };
+
 export default class PointPresenter {
   #pointsContainer = null;
   #destinationsModel = null;
@@ -157,7 +158,6 @@ export default class PointPresenter {
   };
 
   #pointSubmitHandler = (point) => {
-    // this.#replaceFormToPoint();
     this.#handleDataChange(
       UserAction.UPDATE_POINT,
       UpdateType.MINOR,
