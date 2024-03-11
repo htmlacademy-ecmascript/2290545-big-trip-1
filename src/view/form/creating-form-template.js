@@ -13,7 +13,11 @@ function showType(types, activeType) {
 function showOffers(offersModel, selectedOffers, type) {
   const offersByType = offersModel.getByType(type);
 
-  return offersByType.map((item) => (`<div class="event__offer-selector">
+  if (offersByType.length === 0) {
+    return '<div class="event__available-offers"></div>';
+  }
+
+  const html = offersByType.map((item) => (`<div class="event__offer-selector">
   <input class="event__offer-checkbox  visually-hidden" id="event-offer-${item.id}"
   data-offer-id="${item.id}" type="checkbox" name="event-offer-seats"
   ${selectedOffers.find((elem) => elem === item.id) ? 'checked' : ''}>
@@ -23,6 +27,15 @@ function showOffers(offersModel, selectedOffers, type) {
     <span class="event__offer-price">${item.price}</span>
   </label>
 </div>`)).join('');
+
+  return `
+    <section class="event__section  event__section--offers">
+      <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+      <div class="event__available-offers">
+        ${html}
+      </div>
+    </section>
+  `
 }
 
 function showPhotos(photos){
@@ -105,13 +118,8 @@ export function createNewPointTemplate({state, offersModel, arrayDestinationsMod
  </header>
 
  <section class="event__details">
-  <section class="event__section  event__section--offers">
-  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-  <div class="event__available-offers">
   ${showOffers(offersModel, offers, type)}
-
- </div>
-</section>
+  
 
  ${name !== '' ? showDestination(pictures, description) : ''}
  </section>

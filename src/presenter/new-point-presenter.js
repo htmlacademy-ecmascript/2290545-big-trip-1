@@ -38,20 +38,21 @@ export default class NewPointPresenter {
       onDeleteClick: this.destroy,
       onSubmitClick: this.#pointSubmitHandler,
     });
+    document.addEventListener('keydown', this.#escKeyDownHandler);
 
     render(this.#editingFormComponent, this.#pointsContainer, RenderPosition.AFTERBEGIN);
   }
 
   destroy = () => {
     this.#isCreating = false;
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
+    this.#newEventButtonElement.removeAttribute('disabled');
     if (this.#editingFormComponent === null) {
       return;
     }
 
     remove(this.#editingFormComponent);
     this.#editingFormComponent = null;
-    this.#newEventButtonElement.removeAttribute('disabled');
-    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   setSaving() {
@@ -77,7 +78,6 @@ export default class NewPointPresenter {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       this.destroy();
-      document.removeEventListener('keydown', this.#escKeyDownHandler);
     }
   };
 
@@ -88,7 +88,6 @@ export default class NewPointPresenter {
       point,
       {id: crypto.randomUUID(), ...point},
     );
-    this.destroy();
   };
 
   isCreating() {

@@ -4,7 +4,7 @@ import PointsContainerView from '../view/points-container-view.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
 import PointPresenter from './point-presenter.js';
 import { SortType, UserAction, UpdateType, FilterType } from '../const.js';
-import { getPointsPriceDifference, getPointsTimeDifference } from '../utils/point-utils.js';
+import { getPointsPriceDifference, getPointsTimeDifference, getPointsByDate } from '../utils/point-utils.js';
 import { filter } from '../utils/filter-utils.js';
 import NewPointPresenter from './new-point-presenter.js';
 import LoadingView from '../view/loading-view.js';
@@ -67,7 +67,7 @@ export default class ListPresenter {
         return filteredPoints.sort(getPointsTimeDifference);
     }
 
-    return filteredPoints;
+    return filteredPoints.sort(getPointsByDate);
   }
 
   init() {

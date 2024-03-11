@@ -73,3 +73,7 @@ export const getPointsTimeDifference = (pointA, pointB) =>{
 
   return pointBDuration - pointADuration;
 };
+
+export function getPointsByDate (a, b) {
+  return dayjs(a.dateFrom) > dayjs(b.dateFrom) ? 1 : -1;
+}
