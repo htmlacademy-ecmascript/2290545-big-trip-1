@@ -17,7 +17,7 @@ export default class CreatingFormView extends AbstractStatefulView {
     this._setState(CreatingFormView.parsePointToState({point}));
     this.#pointDestination = pointDestination;
     this.#offersModel = offersModel;
-    this.#destinations= destinations;
+    this.#destinations = destinations;
     this.#deleteClickHandler = onDeleteClick;
     this.#onSubmitClick = onSubmitClick;
     this._restoreHandlers();

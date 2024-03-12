@@ -48,7 +48,7 @@ export default class PointPresenter {
       point,
       pointDestination: this.#destinationsModel.getById(point.destination),
       offersModel: this.#offersModel,
-      arrayDestinationsModel: this.#destinationsModel.get(),
+      destinations: this.#destinationsModel.get(),
       onRollupClick: this.#rollupButtonClickHandler,
       onSubmitClick: this.#pointSubmitHandler,
       onDeleteClick: this.#deleteClickHandler,
@@ -174,6 +174,5 @@ export default class PointPresenter {
       point,
     );
   };
-
 
 }

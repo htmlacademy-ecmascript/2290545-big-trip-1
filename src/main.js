@@ -51,7 +51,8 @@ const listPresenter = new ListPresenter({
   offersModel,
   pointsModel,
   filterModel,
-  onNewPointDestroy: handleNewPointFormClose
+  onNewPointDestroy: handleNewPointFormClose,
+  newPointButtonComponent
 });
 
 function handleNewPointFormClose() {

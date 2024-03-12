@@ -10,17 +10,16 @@ export default class NewPointPresenter {
   #handleModeChange = null;
 
   #editingFormComponent = null;
-  #newEventButtonElement = null;
-
+  #newPointButtonComponent = null;
   #isCreating = null;
 
-  constructor({pointsContainer, destinationsModel, offersModel, onDataChange, onModeChange}) {
+  constructor({pointsContainer, destinationsModel, offersModel, onDataChange, onModeChange, newPointButtonComponent}) {
     this.#pointsContainer = pointsContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#handleDataChange = onDataChange;
     this.#handleModeChange = onModeChange;
-    this.#newEventButtonElement = document.querySelector('.trip-main__event-add-btn');
+    this.#newPointButtonComponent = newPointButtonComponent;
   }
 
   init() {
@@ -33,7 +32,7 @@ export default class NewPointPresenter {
       point: defaultPoint,
       pointDestination: defaultPoint.destination,
       offersModel: this.#offersModel,
-      arrayDestinationsModel: this.#destinationsModel.destinations,
+      destinations: this.#destinationsModel.destinations,
       onRollupClick: this.destroy,
       onDeleteClick: this.destroy,
       onSubmitClick: this.#pointSubmitHandler,
@@ -46,7 +45,8 @@ export default class NewPointPresenter {
   destroy = () => {
     this.#isCreating = false;
     document.removeEventListener('keydown', this.#escKeyDownHandler);
-    this.#newEventButtonElement.removeAttribute('disabled');
+    this.#newPointButtonComponent.enable();
+
     if (this.#editingFormComponent === null) {
       return;
     }
@@ -94,5 +94,3 @@ export default class NewPointPresenter {
     return this.#isCreating;
   }
 }
-
-
