@@ -36,7 +36,7 @@ export default class ListPresenter {
     upperLimit: TimeLimit.UPPER_LIMIT
   });
 
-  constructor ({container, pointsModel, destinationsModel, offersModel, filterModel, onNewPointDestroy}) {
+  constructor ({container, pointsModel, destinationsModel, offersModel, filterModel, onNewPointDestroy, newPointButtonComponent}) {
     this.#container = container;
     this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
@@ -49,6 +49,7 @@ export default class ListPresenter {
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
+      newPointButtonComponent
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);

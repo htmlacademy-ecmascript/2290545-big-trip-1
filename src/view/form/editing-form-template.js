@@ -35,7 +35,7 @@ function showOffers(offersModel, selectedOffers, type) {
         ${html}
       </div>
     </section>
-  `
+  `;
 }
 
 function showPhotos(photos){
@@ -46,10 +46,10 @@ function destinationList(items) {
   return items.map((item) => `<option value="${item.name}"></option>`).join('');
 }
 
-export function createEditFormTemplate({state, offersModel, arrayDestinationsModel }){
+export function createEditFormTemplate({state, offersModel, destinations }){
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
-  const currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
+  const currentDestination = destinations.find((item) => item.id === point.destination);
   const {description, pictures, name} = currentDestination ?? defaultDestination;
 
 
@@ -79,7 +79,7 @@ export function createEditFormTemplate({state, offersModel, arrayDestinationsMod
      placeholder="Chamonix" value="${he.encode(name)}" list="destination-list-1">
      <datalist id="destination-list-1">
 
-       ${destinationList(arrayDestinationsModel)}
+       ${destinationList(destinations)}
 
      </datalist>
    </div>

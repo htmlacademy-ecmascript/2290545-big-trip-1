@@ -6,18 +6,18 @@ import 'flatpickr/dist/flatpickr.min.css';
 export default class CreatingFormView extends AbstractStatefulView {
   #pointDestination = null;
   #offersModel = null;
-  #arrayDestinationsModel = null;
+  #destinations = null;
   #deleteClickHandler = null;
   #onSubmitClick = null;
   #datePickerFrom = null;
   #datePickerTo = null;
 
-  constructor({point, pointDestination, offersModel, arrayDestinationsModel, onDeleteClick, onSubmitClick}){
+  constructor({point, pointDestination, offersModel, destinations, onDeleteClick, onSubmitClick}){
     super();
     this._setState(CreatingFormView.parsePointToState({point}));
     this.#pointDestination = pointDestination;
     this.#offersModel = offersModel;
-    this.#arrayDestinationsModel = arrayDestinationsModel;
+    this.#destinations = destinations;
     this.#deleteClickHandler = onDeleteClick;
     this.#onSubmitClick = onSubmitClick;
     this._restoreHandlers();
@@ -28,7 +28,7 @@ export default class CreatingFormView extends AbstractStatefulView {
       state: this._state,
       pointDestination: this.#pointDestination,
       offersModel: this.#offersModel,
-      arrayDestinationsModel: this.#arrayDestinationsModel,
+      destinations: this.#destinations,
     });
   }
 
@@ -85,7 +85,7 @@ export default class CreatingFormView extends AbstractStatefulView {
 
   #destinationChangeHandler = (evt) => {
     evt.preventDefault();
-    const selectedDistination = this.#arrayDestinationsModel.find((elem) => elem.name === evt.target.value);
+    const selectedDistination = this.#destinations.find((elem) => elem.name === evt.target.value);
     const selectedDistinationId = (selectedDistination) ? selectedDistination.id : null;
 
     this.updateElement({

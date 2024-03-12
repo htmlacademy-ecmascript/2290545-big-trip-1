@@ -7,19 +7,19 @@ export default class EditingFormView extends AbstractStatefulView {
 
   #pointDestination = null;
   #offersModel = null;
-  #arrayDestinationsModel = null;
+  #destinations = null;
   #rollupClickHandler = null;
   #onSubmitClick = null;
   #deleteClickHandler = null;
   #datePickerFrom = null;
   #datePickerTo = null;
 
-  constructor({point, pointDestination, offersModel, arrayDestinationsModel, onRollupClick, onDeleteClick, onSubmitClick}){
+  constructor({point, pointDestination, offersModel, destinations, onRollupClick, onDeleteClick, onSubmitClick}){
     super();
     this._setState(EditingFormView.parsePointToState({point}));
     this.#pointDestination = pointDestination;
     this.#offersModel = offersModel;
-    this.#arrayDestinationsModel = arrayDestinationsModel;
+    this.#destinations = destinations;
     this.#rollupClickHandler = onRollupClick;
     this.#onSubmitClick = onSubmitClick;
     this.#deleteClickHandler = onDeleteClick;
@@ -32,7 +32,7 @@ export default class EditingFormView extends AbstractStatefulView {
       state: this._state,
       pointDestination: this.#pointDestination,
       offersModel: this.#offersModel,
-      arrayDestinationsModel: this.#arrayDestinationsModel,
+      destinations: this.#destinations,
     });
   }
 
@@ -89,7 +89,7 @@ export default class EditingFormView extends AbstractStatefulView {
 
   #destinationChangeHandler = (evt) => {
     evt.preventDefault();
-    const selectedDistination = this.#arrayDestinationsModel.find((elem) => elem.name === evt.target.value);
+    const selectedDistination = this.#destinations.find((elem) => elem.name === evt.target.value);
     const selectedDistinationId = (selectedDistination) ? selectedDistination.id : null;
 
     this.updateElement({

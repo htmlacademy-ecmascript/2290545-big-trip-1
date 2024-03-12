@@ -35,7 +35,7 @@ function showOffers(offersModel, selectedOffers, type) {
         ${html}
       </div>
     </section>
-  `
+  `;
 }
 
 function showPhotos(photos){
@@ -60,10 +60,10 @@ function showDestination(pictures, description) {
   `;
 }
 
-export function createNewPointTemplate({state, offersModel, arrayDestinationsModel }) {
+export function createNewPointTemplate({state, offersModel, destinations }) {
   const {point} = state;
   const {basePrice, type, dateFrom, dateTo, offers} = point;
-  let currentDestination = arrayDestinationsModel.find((item) => item.id === point.destination);
+  let currentDestination = destinations.find((item) => item.id === point.destination);
   if (currentDestination === undefined) {
     currentDestination = defaultDestination;
   }
@@ -89,7 +89,7 @@ export function createNewPointTemplate({state, offersModel, arrayDestinationsMod
      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination"
      placeholder="Chamonix" value="${he.encode(name)}" list="destination-list-1">
      <datalist id="destination-list-1">
-       ${destinationList(arrayDestinationsModel)}
+       ${destinationList(destinations)}
 
      </datalist>
    </div>
@@ -119,7 +119,7 @@ export function createNewPointTemplate({state, offersModel, arrayDestinationsMod
 
  <section class="event__details">
   ${showOffers(offersModel, offers, type)}
-  
+
 
  ${name !== '' ? showDestination(pictures, description) : ''}
  </section>
